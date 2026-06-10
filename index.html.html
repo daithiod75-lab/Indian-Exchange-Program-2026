@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Student Exchange Program - 11-Day Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fdfbf7; 
+            color: #334155; 
+        }
+        .day-tab.active { 
+            background-color: #1e293b; 
+            color: #ffffff; 
+            border-color: #1e293b; 
+        }
+        .schedule-card { 
+            transition: all 0.2s ease; 
+        }
+        .schedule-card:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        /* Scrollbar customization */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <nav class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🇮🇳</span>
+                <span class="text-sm md:text-lg font-bold text-slate-800 tracking-wider">India Exchange Program Coordination</span>
+                <span class="text-2xl">🇯🇵</span>
+            </div>
+            <div class="hidden sm:flex space-x-2 text-xs font-semibold">
+                <span class="px-2.5 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full">June 2026 Program</span>
+                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">Host Family Network</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 mt-8">
+        
+        <!-- Introduction Header -->
+        <header class="mb-8 bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-2xl border border-amber-100/70">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 leading-snug">
+                FY2026 Interactive Itinerary & Logistics
+            </h1>
+            <p class="text-sm text-slate-600 mt-2 max-w-4xl leading-relaxed">
+                This management tool translates the official "R080608＿インド受け入れ1‗枚‗計画.docx" planning document. Guests and organizers can easily browse the 11-day itinerary, school classes, cultural immersion sessions, daily staff assignments, and meal arrangements.
+            </p>
+        </header>
+
+        <!-- Analytics & Dashboard Section -->
+        <section id="analysis-dashboard" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Activity Share Chart -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-base text-slate-800 mb-1">Program Activity Breakdown</h3>
+                <p class="text-xs text-slate-400 mb-4">Event category distribution across the 11-day program</p>
+                <div class="relative h-60 w-full flex items-center justify-center">
+                    <canvas id="enActivityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Quick Summaries -->
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Cultural Experiences & Exchange -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">CULTURE & EXCHANGE</span>
+                        <h3 class="font-bold text-lg text-slate-800 mt-1 mb-2">Traditional Cultural Immersions</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            Includes a Japanese Tea Ceremony led by Hishinuma-sensei, an authentic Miso Soup & Soba noodle-making experience taught by Kikuchi-sensei, Kendo martial arts demonstrations in the multi-purpose hall, and a historical visit to Kamine Shrine.
+                        </p>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-1.5">
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium border border-emerald-100">🍵 Tea Ceremony</span>
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium border border-emerald-100">🥢 Soba Making</span>
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium border border-emerald-100">⚔️ Kendo Demo</span>
+                        <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-medium border border-emerald-100">⛩️ Kamine Shrine</span>
+                    </div>
+                </div>
+
+                <!-- Host School Basic Info -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 tracking-wider uppercase">HOSTING INFO</span>
+                        <h3 class="font-bold text-lg text-slate-800 mt-1 mb-2">Host School & Staff Notes</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                            Visiting chaperones will stay at a hotel in Hitachi City. Rest days are supported by Odonov-sensei. The entire school, including classes 1-4, 2-5, 2-6 (GS Course), and 3-7, will warmly collaborate.
+                        </p>
+                    </div>
+                    <div class="space-y-2 text-xs text-slate-600">
+                        <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-400 mr-2"></span> <span><strong>Coordination Staff:</strong> Odonov-sensei, Kuroda-sensei, Otsu-sensei</span></div>
+                        <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-400 mr-2"></span> <span><strong>Chaperone Hotel:</strong> Hitachi City Hotel</span></div>
+                        <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-400 mr-2"></span> <span><strong>Meal Arrangements:</strong> Store/Lunchboxes & "Namaste" Indian Restaurant</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Filter Buttons -->
+        <div class="mb-4 flex flex-wrap gap-2 items-center">
+            <span class="text-xs font-bold text-slate-400 mr-2">Filter Itinerary:</span>
+            <button onclick="filterEvents('all')" id="btn-filter-all" class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-800 text-white border border-slate-800 transition">All Events</button>
+            <button onclick="filterEvents('school')" id="btn-filter-school" class="px-3 py-1 text-xs font-semibold rounded-full bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 transition">🏫 Classes & School</button>
+            <button onclick="filterEvents('culture')" id="btn-filter-culture" class="px-3 py-1 text-xs font-semibold rounded-full bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50 transition">🍵 Culture & Exchange</button>
+            <button onclick="filterEvents('tour')" id="btn-filter-tour" class="px-3 py-1 text-xs font-semibold rounded-full bg-white text-orange-600 border border-orange-200 hover:bg-orange-50 transition">🗺️ Tours & Sightseeing</button>
+            <button onclick="filterEvents('logistics')" id="btn-filter-logistics" class="px-3 py-1 text-xs font-semibold rounded-full bg-white text-purple-600 border border-purple-200 hover:bg-purple-50 transition">📦 Logistics & Travel</button>
+        </div>
+
+        <!-- Date Tabs Navigation -->
+        <div class="flex overflow-x-auto pb-3 gap-2 no-scrollbar" id="enDateTabs">
+            <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Itinerary Detail Area -->
+        <div class="mt-6 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            
+            <!-- Day Header Banner -->
+            <div id="enDayHeader" class="bg-slate-900 px-6 py-5 md:px-8 md:py-6 text-white flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="px-2 py-0.5 bg-white/20 rounded text-xs font-semibold tracking-wider" id="displayDayNum">DAY 1</span>
+                        <h4 id="displayEnDate" class="text-xl md:text-2xl font-bold">June 13 (Sat)</h4>
+                    </div>
+                    <p id="dayEnSummary" class="text-xs md:text-sm text-slate-300 mt-1">Narita Airport Arrival & Host Family Matchmaking Ceremony</p>
+                </div>
+                <div class="flex flex-wrap gap-2 items-center">
+                    <span id="staffEnBadge" class="px-3 py-1.5 bg-white/10 rounded-lg text-xs font-medium border border-white/20">
+                        Duty/Support: Odonov, Kuroda
+                    </span>
+                </div>
+            </div>
+
+            <!-- Itinerary Main Layout -->
+            <div class="p-6 md:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Timeline Section (3/4 Width) -->
+                    <div class="lg:col-span-3">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Today's Schedule Itinerary</h5>
+                        <div id="enTimelineContainer" class="space-y-4">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Logistics Section (1/4 Width) -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-100 sticky top-24 space-y-5">
+                            
+                            <!-- Chaperone Meals -->
+                            <div>
+                                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center">
+                                    🍛 Chaperone Meals
+                                </h5>
+                                <div id="enMealContainer" class="space-y-2 text-xs">
+                                    <!-- Populated dynamically via JS -->
+                                </div>
+                            </div>
+
+                            <hr class="border-slate-200">
+
+                            <!-- Category Legends -->
+                            <div>
+                                <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Category Guide</h5>
+                                <div class="space-y-1.5 text-xs">
+                                    <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-blue-500 mr-2"></span> <span>Classes & School Life</span></div>
+                                    <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-emerald-500 mr-2"></span> <span>Culture & Exchange</span></div>
+                                    <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-orange-500 mr-2"></span> <span>Tours & Sightseeing</span></div>
+                                    <div class="flex items-center"><span class="w-2.5 h-2.5 rounded bg-purple-500 mr-2"></span> <span>Logistics & Travel</span></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-xs mt-12">
+        <p>© 2026 Prefectural High School Indian Student Exchange Coordination System</p>
+        <p class="mt-1">In strict compliance with "R080608＿インド受け入れ1‗枚‗計画.docx"</p>
+    </footer>
+
+    <script>
+        // Completely translated English Schedule Data from original docx source
+        const enScheduleData = [
+            {
+                day: "DAY 1",
+                date: "June 13 (Sat)",
+                summary: "Arrival at Narita Airport & Host Family Handover Ceremony",
+                staff: "Odonov, Kuroda",
+                meals: { b: "None / Onboard", l: "None / Onboard", d: "Light meals (Odonov House)" },
+                events: [
+                    { time: "14:30", title: "Depart School", detail: "Chartered transport departs school for Narita Airport.", cat: "logistics" },
+                    { time: "16:00", title: "Arrive at Narita Airport", detail: "Await and receive the Indian delegation at the arrivals hall.", cat: "logistics" },
+                    { time: "17:30", title: "Depart Airport", detail: "Indian students and chaperones travel back to the host high school.", cat: "logistics" },
+                    { time: "19:30", title: "Arrive at School & Welcoming Ceremony", detail: "First meeting with host families. Matchmaking and handover ceremony. Indian chaperones start homestay at Odonov-sensei's home.", cat: "culture" }
+                ]
+            },
+            {
+                day: "DAY 2",
+                date: "June 14 (Sun)",
+                summary: "Host Family Day & Chaperone Local Festival Visit",
+                staff: "Host Families / Odonov",
+                meals: { b: "Odonov House", l: "Odonov House", d: "Odonov House" },
+                events: [
+                    { time: "All Day", title: "Students: Host Family Day", detail: "Exchange students spend the day experiencing Japanese home life and local sightseeing with their hosts.", cat: "culture" },
+                    { time: "Flexible", title: "Chaperones: Naka Environmental Festival Visit", detail: "Chaperones visit the Naka City Environmental Festival to watch the stage performance of the Blue Fairies.", cat: "tour" }
+                ]
+            },
+            {
+                day: "DAY 3",
+                date: "June 15 (Mon)",
+                summary: "Orientation, Survival Japanese ①, Welcome Brass Band Concert",
+                staff: "School General Staff",
+                meals: { b: "Odonov House", l: "Odonov House", d: "Hotel (Hitachi)" },
+                events: [
+                    { time: "08:10", title: "Principal's Welcome Address", detail: "Official welcoming words and introductions in the Principal's Office / Conference Room.", cat: "school" },
+                    { time: "P1 (08:40)", title: "Observe Regular Classes", detail: "Indian students join the classes of their host high school partners.", cat: "school" },
+                    { time: "P2 (09:40)", title: "Observe Regular Classes", detail: "Observe everyday teaching styles and classes in general subjects.", cat: "school" },
+                    { time: "P3 (10:40)", title: "Orientation Session", detail: "Seminar Room A: Review daily schedules, guidelines, and school facilities.", cat: "logistics" },
+                    { time: "P4 (11:40)", title: "Sharma-sensei's Indian Culture Seminar", detail: "Seminar Room A: Special interactive seminar on Indian culture for host high school students.", cat: "culture" },
+                    { time: "Lunch (12:30)", title: "Brass Band Welcome Concert", detail: "AV Room: High school Brass Band Club performs a high-energy welcome concert.", cat: "culture" },
+                    { time: "P5 (13:15)", title: "Regular Class / Chaperone Classroom Walkthrough", detail: "Students participate in regular subjects; chaperones observe classroom teaching environments.", cat: "school" },
+                    { time: "P6 (14:15)", title: "Japanese Language ① (Survival Japanese)", detail: "Seminar Room B: Practical daily phrases, greetings, and school etiquette basics.", cat: "school" },
+                    { time: "P7 (15:15)", title: "Regular Class Participation", detail: "Participate in homeroom and final daily preparations with host classmates.", cat: "school" },
+                    { time: "Cleaning / HR", title: "School Cleaning Routine", detail: "Students experience typical Japanese high school cleaning. Chaperones observe homeroom activities in classes 2-5 & 2-6.", cat: "school" },
+                    { time: "After School", title: "Chaperone Hotel Check-In & Welcome Dinner", detail: "Transfer chaperones to Hitachi City Hotel. Enjoy welcome dinner.", cat: "logistics" }
+                ]
+            },
+            {
+                day: "DAY 4",
+                date: "June 16 (Tue)",
+                summary: "All-Day Career & Study Tour",
+                staff: "Odonov (Full-day escort)",
+                meals: { b: "Hotel", l: "Provided on Tour", d: "Provided on Tour" },
+                events: [
+                    { time: "All Day", title: "Career & Study Tour Participation", detail: "All Indian students and chaperones accompany Class 2-6's official off-campus career study tour. Odonov-sensei provides English interpretation support throughout.", cat: "tour" },
+                    { time: "After School", title: "Return to Hitachi Hotel & Dinner", detail: "Chaperone transfer back to hotel, accompanied by staff for dinner.", cat: "logistics" }
+                ]
+            },
+            {
+                day: "DAY 5",
+                date: "June 17 (Wed)",
+                summary: "Survival Japanese ②, Hindi Seminar, Tea Ceremony",
+                staff: "School Staff, Hishinuma-sensei",
+                meals: { b: "Hotel", l: "Convenience Store", d: "Hotel" },
+                events: [
+                    { time: "P1 - P2", title: "Regular Classes & Health Check", detail: "Check overall well-being and attend morning host classes.", cat: "school" },
+                    { time: "P3 (10:40)", title: "Japanese Language ② (Survival Japanese)", detail: "Seminar Room A: Practice shopping, asking for directions, and city navigation phrases.", cat: "school" },
+                    { time: "P4 (11:40)", title: "Global Study (GS) AWS Class Participation", detail: "Participate in Academic Writing & Speaking (AWS) for 2nd Year GS course.", cat: "school" },
+                    { time: "Lunch Break", title: "Classroom Lunch & Chaperone Convenience Store Experience", detail: "Students eat lunch boxes in class. Chaperones enjoy a guided local convenience store run (7-Eleven, etc.) and rest.", cat: "logistics" },
+                    { time: "P5 (13:15)", title: "Sharma-sensei's Hindi Language Seminar", detail: "Seminar Room C: Introductory Hindi language session for interested Japanese students.", cat: "culture" },
+                    { time: "P6 (14:15)", title: "Active Research & Project Inquiry Time", detail: "Observe/join students in classroom project inquiries and active group study.", cat: "school" },
+                    { time: "P7 & Cleaning", title: "Cleaning and Homeroom", detail: "Join host students in cleaning classrooms and school corridors.", cat: "school" },
+                    { time: "After School", title: "Traditional Culture: Tea Ceremony", detail: "Japanese Room: Experience traditional tea preparation led by Hishinuma-sensei and the high school Tea Ceremony Club. Chaperone hotel transfer to follow.", cat: "culture" }
+                ]
+            },
+            {
+                day: "DAY 6",
+                date: "June 18 (Thu)",
+                summary: "Survival Japanese ③, Miso Soup & Soba Noodle Making",
+                staff: "School Staff, Kikuchi-sensei",
+                meals: { b: "Hotel", l: "Convenience Store", d: "Hotel" },
+                events: [
+                    { time: "P1 - P2", title: "Regular Classes & Daily Check-in", detail: "Health assessment and morning subject study with hosts.", cat: "school" },
+                    { time: "P3 (10:40)", title: "Japanese Language ③ (Survival Japanese)", detail: "Seminar Room A: Dive into deeper communication phrases and school culture insights.", cat: "school" },
+                    { time: "P4 - P5", title: "Regular Classroom Lessons", detail: "Attend typical lessons like English, Math, or PE.", cat: "school" },
+                    { time: "Lunch Break", title: "Classroom Lunch & Chaperone Convenience Store Experience", detail: "Students dine with friends. Chaperones purchase food at FamilyMart, rest in staff lounge.", cat: "logistics" },
+                    { time: "P6 - P7", title: "Cleaning, HR & Homeroom Activities", detail: "School-wide general cleaning routine and classroom HR activities.", cat: "school" },
+                    { time: "After School", title: "Cultural Experience: Miso Soup & Soba Making", detail: "Cooking Room: Under the guidance of Kikuchi-sensei, students hand-make authentic Soba noodles and taste them with traditional Miso soup.", cat: "culture" }
+                ]
+            },
+            {
+                day: "DAY 7",
+                date: "June 19 (Fri)",
+                summary: "Exchange Presentation, Club Visit, Indian Restaurant Dinner",
+                staff: "School Staff",
+                meals: { b: "Hotel", l: "Convenience Store", d: "Dinner: Namaste Restaurant" },
+                events: [
+                    { time: "P1 (08:40)", title: "Japanese Language ④ (Survival Japanese)", detail: "Seminar Room A: Review survival Japanese. Draft and practice a brief self-introduction speech.", cat: "school" },
+                    { time: "P2 (09:40)", title: "Regular Morning Classes", detail: "Observe or join partner students in morning lessons.", cat: "school" },
+                    { time: "P3 (10:40)", title: "Sharma-sensei's ELT Methods Seminar", detail: "Seminar Room A: Roundtable discussion on English language teaching (ELT) methodologies in Japan.", cat: "culture" },
+                    { time: "P4 (11:40)", title: "Indian Student Presentation & Exchange Forum", detail: "Class 3-7 Classroom: Indian students share their presentation projects, followed by cross-cultural Q&A with Japanese peers.", cat: "culture" },
+                    { time: "Lunch Break", title: "Classroom Lunch & Chaperone Convenience Store Experience", detail: "Students dine in homerooms. Chaperones purchase food at Lawson.", cat: "logistics" },
+                    { time: "P5 - P7", title: "Regular Classes, General Cleaning & Homeroom", detail: "Maintain normal schedule while wrapping up weekly classroom studies.", cat: "school" },
+                    { time: "After School", title: "Observe Club Activities at Takahagi Campus", detail: "Transfer via school official vehicle to Takahagi Campus. Observe sports clubs (Baseball, Soccer, Track and Field, etc.).", cat: "tour" },
+                    { time: "Evening", title: "Indian Dinner Meeting at 'Namaste'", detail: "Chaperones and accompanying teachers enjoy a dinner meeting at the local Indian restaurant 'Namaste' near Takahagi Station.", cat: "culture" }
+                ]
+            },
+            {
+                day: "DAY 8",
+                date: "June 20 (Sat)",
+                summary: "Mito Historical Walking Tour",
+                staff: "Odonov (Tour Leader)",
+                meals: { b: "Hotel", l: "Mito City", d: "Mito City" },
+                events: [
+                    { time: "10:00", title: "Mito Station Meet-Up", detail: "Assemble in front of the main ticket gate of Mito Station.", cat: "tour" },
+                    { time: "Morning", title: "Historic 'Kodokan' School Tour", detail: "Take a walking tour of 'Kodokan' (Japan's largest historical samurai academy, an official cultural heritage site).", cat: "tour" },
+                    { time: "Lunch", title: "Keisei Department Store Lunch", detail: "Dine at the department store, with restaurant choices catered to chaperone dietary requirements.", cat: "tour" },
+                    { time: "Afternoon", title: "Lake Senba Walk & Souvenir Shopping at Mito Station", detail: "Enjoy a scenic walk around Lake Senba, shop for local souvenirs at the Mito Station shopping complex, then dismiss. Dinner details verified by staff.", cat: "tour" }
+                ]
+            },
+            {
+                day: "DAY 9",
+                date: "June 21 (Sun)",
+                summary: "Host Family Sunday & Chaperone Quiet Rest Day",
+                staff: "Host Families / Odonov",
+                meals: { b: "Hotel", l: "Self-arranged / Free", d: "Self-arranged / Free" },
+                events: [
+                    { time: "All Day", title: "Students: Host Family Day", detail: "Relax with host families, join home activities, or go for short neighborhood tours.", cat: "culture" },
+                    { time: "All Day", title: "Chaperones: Full Rest Day in Hitachi City", detail: "Enjoy a quiet rest day at the hotel. Odonov-sensei is on standby to assist with shopping or local questions.", cat: "tour" }
+                ]
+            },
+            {
+                day: "DAY 10",
+                date: "June 22 (Mon)",
+                summary: "Kendo, Kamine Shrine, Certificate Ceremony, Class 1-4 Exchange",
+                staff: "School Principal, Staff",
+                meals: { b: "Hotel", l: "Convenience Store", d: "Hitachi City" },
+                events: [
+                    { time: "P1 - P4", title: "Regular Classes", detail: "The final full school day in Japan. Spend class time with host classmates.", cat: "school" },
+                    { time: "Lunch Break", title: "Live Kendo Demonstration", detail: "Multi-purpose Hall (12:45~): Intense sparring demo and rules explanation by the high school Kendo Club.", cat: "culture" },
+                    { time: "P5 (13:15)", title: "Cultural Visit: Kamine Shrine", detail: "A scenic visit to the local historical 'Kamine Shrine' (Hitachi City). Learn traditional temple/shrine etiquette.", cat: "tour" },
+                    { time: "P6 (14:15)", title: "Closing & Certificate Ceremony", detail: "Principal's Office: Closing remarks and handover of short-term study certificates by the Principal.", cat: "logistics" },
+                    { time: "P7 (15:15)", title: "Cultural Exchange with Class 1-4", detail: "Classroom visit for interactive communication and lively final chat sessions with 1st-year students.", cat: "culture" },
+                    { time: "Cleaning & HR", title: "School-wide Gratitude Cleaning & Dinner Transfer", detail: "Clean the school together to express gratitude. Transfer chaperones to dinner venue.", cat: "school" }
+                ]
+            },
+            {
+                day: "DAY 11",
+                date: "June 23 (Tue)",
+                summary: "Last Homeroom, Packing, Departure to Narita Airport",
+                staff: "Odonov, Otsu",
+                meals: { b: "Hotel", l: "Self-arranged / Onboard", d: "None / Onboard" },
+                events: [
+                    { time: "P1 (08:40)", title: "Farewell Homeroom with Class 3-7", detail: "Spend the final homeroom period in the classroom with Class 3-7 peers.", cat: "school" },
+                    { time: "P2 (09:40)", title: "Free Time & Packing Review", detail: "Verify personal belongings and pack suitcases carefully.", cat: "logistics" },
+                    { time: "10:40", title: "Departure from School", detail: "Final farewells with host families, students, and staff. Depart school by car (accompanied by Odonov & Otsu).", cat: "logistics" },
+                    { time: "12:30", title: "Arrival at Narita Airport & Gate Support", detail: "Arrive at Narita Airport. Support with check-in and luggage drop. Staff return to school after check-in completion.", cat: "logistics" }
+                ]
+            }
+        ];
+
+        let activeDayIdx = 0;
+        let activeFilter = 'all';
+
+        // Init handler
+        function enInit() {
+            renderEnTabs();
+            renderEnDay(0);
+            renderEnChart();
+        }
+
+        // Render Date Tabs
+        function renderEnTabs() {
+            const tabWrapper = document.getElementById('enDateTabs');
+            tabWrapper.innerHTML = '';
+            enScheduleData.forEach((item, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `tab-btn-${idx}`;
+                btn.className = `day-tab flex-shrink-0 px-4 py-2 rounded-xl border text-left transition-all ${idx === activeDayIdx ? 'active shadow-md font-semibold' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'}`;
+                
+                const splitDate = item.date.split(' '); // "June" "13" and "(Sat)"
+                btn.innerHTML = `
+                    <span class="block text-[10px] uppercase opacity-75 font-bold tracking-wider">${item.day}</span>
+                    <span class="text-xs font-bold">${splitDate[0]} ${splitDate[1]}</span> <span class="text-[11px] font-medium opacity-80">${splitDate[2]}</span>
+                `;
+                btn.onclick = () => {
+                    activeDayIdx = idx;
+                    document.querySelectorAll('.day-tab').forEach(b => {
+                        b.classList.remove('active', 'shadow-md', 'font-semibold');
+                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                    });
+                    btn.classList.add('active', 'shadow-md', 'font-semibold');
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                    renderEnDay(idx);
+                };
+                tabWrapper.appendChild(btn);
+            });
+        }
+
+        // Render detailed itinerary of specified index
+        function renderEnDay(index) {
+            const data = enScheduleData[index];
+            document.getElementById('displayDayNum').innerText = data.day;
+            document.getElementById('displayEnDate').innerText = data.date;
+            document.getElementById('dayEnSummary').innerText = data.summary;
+            document.getElementById('staffEnBadge').innerText = `Duty/Support: ${data.staff}`;
+
+            // Render chaperone meals
+            const mealBox = document.getElementById('enMealContainer');
+            mealBox.innerHTML = `
+                <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-100">
+                    <span class="font-bold text-slate-500">Breakfast</span>
+                    <span class="text-slate-700 font-semibold text-right">${data.meals.b}</span>
+                </div>
+                <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-100">
+                    <span class="font-bold text-slate-500">Lunch</span>
+                    <span class="text-slate-700 font-semibold text-right">${data.meals.l}</span>
+                </div>
+                <div class="flex items-center justify-between p-2 bg-white rounded-lg border border-slate-100">
+                    <span class="font-bold text-slate-500">Dinner</span>
+                    <span class="text-slate-700 font-semibold text-right">${data.meals.d}</span>
+                </div>
+            `;
+
+            // Render Timeline List
+            renderEnTimeline(data.events);
+        }
+
+        // Render timeline based on categories
+        function renderEnTimeline(events) {
+            const timeline = document.getElementById('enTimelineContainer');
+            timeline.innerHTML = '';
+
+            const filteredEvents = activeFilter === 'all' 
+                ? events 
+                : events.filter(e => e.cat === activeFilter);
+
+            if (filteredEvents.length === 0) {
+                timeline.innerHTML = `
+                    <div class="p-8 text-center bg-slate-50 rounded-xl border border-dashed text-slate-400">
+                        No scheduled events matching this filter on this day.
+                    </div>
+                `;
+                return;
+            }
+
+            filteredEvents.forEach(evt => {
+                let colorClass = 'border-slate-300';
+                let bgBadge = 'bg-slate-100 text-slate-700';
+                let catLabel = 'Other';
+
+                if (evt.cat === 'school') {
+                    colorClass = 'border-blue-500';
+                    bgBadge = 'bg-blue-50 text-blue-700';
+                    catLabel = 'School & Classes';
+                } else if (evt.cat === 'culture') {
+                    colorClass = 'border-emerald-500';
+                    bgBadge = 'bg-emerald-50 text-emerald-700';
+                    catLabel = 'Culture & Exchange';
+                } else if (evt.cat === 'tour') {
+                    colorClass = 'border-orange-500';
+                    bgBadge = 'bg-orange-50 text-orange-700';
+                    catLabel = 'Tours & Sightseeing';
+                } else if (evt.cat === 'logistics') {
+                    colorClass = 'border-purple-500';
+                    bgBadge = 'bg-purple-50 text-purple-700';
+                    catLabel = 'Logistics & Travel';
+                }
+
+                const card = document.createElement('div');
+                card.className = `schedule-card p-4 bg-white border border-slate-100 border-l-4 ${colorClass} rounded-xl flex flex-col md:flex-row gap-2 md:gap-4`;
+                card.innerHTML = `
+                    <div class="w-24 flex-shrink-0 flex items-baseline md:flex-col gap-1.5">
+                        <span class="font-black text-slate-800 text-sm tracking-wide">${evt.time}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${bgBadge} md:mt-1">${catLabel}</span>
+                    </div>
+                    <div class="flex-1">
+                        <h6 class="font-bold text-slate-800 text-sm leading-snug">${evt.title}</h6>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">${evt.detail}</p>
+                    </div>
+                `;
+                timeline.appendChild(card);
+            });
+        }
+
+        // Filter Functionality
+        function filterEvents(category) {
+            activeFilter = category;
+            
+            const filters = ['all', 'school', 'culture', 'tour', 'logistics'];
+            filters.forEach(cat => {
+                const btn = document.getElementById(`btn-filter-${cat}`);
+                if (cat === category) {
+                    btn.className = `px-3 py-1 text-xs font-semibold rounded-full bg-slate-800 text-white border border-slate-800 transition`;
+                } else {
+                    let baseColor = 'text-slate-600 border-slate-200 hover:bg-slate-50';
+                    if (cat === 'school') baseColor = 'text-blue-600 border-blue-200 hover:bg-blue-50';
+                    if (cat === 'culture') baseColor = 'text-emerald-600 border-emerald-200 hover:bg-emerald-50';
+                    if (cat === 'tour') baseColor = 'text-orange-600 border-orange-200 hover:bg-orange-50';
+                    if (cat === 'logistics') baseColor = 'text-purple-600 border-purple-200 hover:bg-purple-50';
+                    btn.className = `px-3 py-1 text-xs font-semibold rounded-full bg-white border ${baseColor} transition`;
+                }
+            });
+
+            renderEnDay(activeDayIdx);
+        }
+
+        // Draw the Chart.js activity allocation
+        function renderEnChart() {
+            const ctx = document.getElementById('enActivityChart').getContext('2d');
+            
+            const counts = { school: 0, culture: 0, tour: 0, logistics: 0 };
+            enScheduleData.forEach(day => {
+                day.events.forEach(evt => {
+                    if (counts[evt.cat] !== undefined) {
+                        counts[evt.cat]++;
+                    }
+                });
+            });
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Classes & School', 'Culture & Exchange', 'Tours & Sightseeing', 'Logistics & Travel'],
+                    datasets: [{
+                        data: [counts.school, counts.culture, counts.tour, counts.logistics],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f97316', '#a855f7'],
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '72%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 12,
+                                font: { size: 10, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `  ${context.label}: ${context.raw} items`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = enInit;
+    </script>
+</body>
+</html>
